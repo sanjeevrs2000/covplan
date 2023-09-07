@@ -6,17 +6,16 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import pylab as pl
 from sklearn.cluster import KMeans
-from tsp_solver.greedy import solve_tsp
 from python_tsp.exact import solve_tsp_dynamic_programming
 from dubins_path_planner import plan_dubins_path
 from lines import computeAngle, pointOnLine, intersectLines, intersectPointOnLine
-from lines import getPoly, numPoly, tellme,rmCrossovers, rmGabs
+from lines import getPoly, numPoly, tellme
 from convert_coordinates import LLtoUTM, UTMtoLL
 import folium
 import utm
 
 class Field:
-	def __init__(self, filename, opw, nhp, theta, utm_=False, utmzone=None):
+	def __init__(self, filename, opw, nhp, theta):
 		self.opw = opw
 		self.nhp = nhp
 		self.theta = math.fmod( theta * pi/180+ 2 * pi, 2 * pi)
@@ -29,27 +28,23 @@ class Field:
 		self.robotIntiPosition = [] #robot initial position
 		self.path = []  # optimal path to followed by the robot
 		self.traj = []  # robot trajectory using Dubins curves
-		self.utm=utm_
 		self.utm_l=None
-		self.utmzone=utmzone
+		self.utmzone=None
 
-		print("file Name: ", filename)
 		for line in open(filename, 'r'):
 			self.data.append(tuple(line.strip().split()))
 
 		self.data = np.array(self.data,dtype=np.double)		
-		# print(self.data)
-		
-		if (not self.utm):
-			for i in range(len(self.data)):
-				if np.isnan(self.data[i][0]):
-					continue
-				# z,ux,uy=LLtoUTM(23,self.data[i][0], self.data[i][1])
-				ux,uy,z,l=utm.from_latlon(self.data[i][0],self.data[i][1])
-				self.utmzone=z
-				self.utm_l=l
-				self.data[i]=[ux,uy]
-		
+
+		for i in range(len(self.data)):
+			if np.isnan(self.data[i][0]):
+				continue
+			# z,ux,uy=LLtoUTM(23,self.data[i][0], self.data[i][1])
+			ux,uy,z,l=utm.from_latlon(self.data[i][0],self.data[i][1])
+			self.utmzone=z
+			self.utm_l=l
+			self.data[i]=[ux,uy]
+
 
 	def showField(self):
 
@@ -68,8 +63,8 @@ class Field:
 			else:
 				plt.plot(poly[:,0] , poly[:,1] , 'r-')
 		
-		if self.robotIntiPosition.any():
-			plt.fill( self.robotIntiPosition[:,0], self.robotIntiPosition[:,1], 'r', lw=2 )
+		# if self.robotIntiPosition.any():
+		# 	plt.fill( self.robotIntiPosition[:,0], self.robotIntiPosition[:,1], 'r', lw=2 )
 		
 		labels = self.labels
 		n_clusters = len(np.unique(labels))
@@ -96,8 +91,9 @@ class Field:
 
 		hd_ll,latlon=[],[]
 
-
-		map=folium.Map(zoom_start=20)
+		lat,lon=utm.to_latlon(self.hd[0][0][0],self.hd[0][0][1],self.utmzone,self.utm_l,northern=True)
+		map=folium.Map(location=[lat,lon],zoom_start=20)
+		
 		for i in range(len(self.hd)):
 			hd_ll=[]
 			for j in range(len(self.hd[i])):
@@ -117,7 +113,7 @@ class Field:
 		map.show_in_browser()
 
 	def trackGen(self):
-		poly = getPoly(self.data, 1)  # later on we will work on headland paths
+		poly = getPoly(self.data, 1) 
 	
 		# find minimum bounding box (MBB)
 		xmin = np.min(poly[:,0])
@@ -128,7 +124,6 @@ class Field:
 		#diagonal's length of the MBB
 		dmax = np.linalg.norm([xmin-xmax, ymin-ymax])
 		dmax1 = math.sqrt((xmin-xmax)**2 + (ymin-ymax)**2)
-		#print "dmax:", dmax, dmax1, xmin-xmax
 
 		# find center point of the MBB
 		m = [(xmin+xmax)/2, (ymin+ymax)/2]
@@ -223,11 +218,7 @@ class Field:
 				X = np.hstack((X,X[0]))
 				Y = np.hstack((Y,Y[0]))
 				#combine
-				tmp = np.vstack((X,Y)).T
-				if i == 1:
-					tmp = rmCrossovers(rmCrossovers(rmCrossovers(rmCrossovers(rmCrossovers(tmp, 6), 5), 4), 3), 2)
-					tmp = rmGabs(rmGabs(rmGabs(rmGabs(tmp, self.opw, 2), self.opw, 3), self.opw, 4), self.opw, 5)
-		
+				tmp = np.vstack((X,Y)).T		
 				self.hd.append(tmp)
 				
 
@@ -259,57 +250,49 @@ class Field:
 
 		colors = iter(cm.rainbow(np.linspace(0,1,n_clusters)))
 
-		fig = plt.figure()
+		# fig = plt.figure()
 		for k, col in zip(list(range(n_clusters)), colors):
 			my_members = k_means_labels == k
 			cluster_center = k_means_cluster_centers[k]
 	
-	def getRobotIntialPoition(self):
-		#get robot initial location (it should be two points to get heading angle)
-		plt.figure(1)
-		plt.clf()
-		#plot field's polygons
-		for i in  range(1, int(numPoly(self.data))+1):
-			poly = getPoly(self.data, i)
-			if i == 1:
-				plt.plot(poly[:,0] , poly[:,1] , 'b-')
-			else:
-				plt.plot(poly[:,0] , poly[:,1] , 'r-')
-		#get two points
-		tellme('You will define a robot intial poition and heading angle (by selecting two points),\n click to begin')
+	# def getRobotIntialPoition(self):
+	# 	#get robot initial location (it should be two points to get heading angle)
+	# 	plt.figure()
+	# 	plt.clf()
+	# 	#plot field's polygons
+	# 	for i in  range(1, int(numPoly(self.data))+1):
+	# 		poly = getPoly(self.data, i)
+	# 		if i == 1:
+	# 			plt.plot(poly[:,0] , poly[:,1] , 'b-')
+	# 		else:
+	# 			plt.plot(poly[:,0] , poly[:,1] , 'r-')
+	# 	#get two points
+	# 	tellme('You will define a robot intial poition and heading angle (by selecting two points),\n click to begin')
 
-		pl.waitforbuttonpress()
-		happy = False
-		while not happy:
-			pts = []
-			while len(pts) < 2:
-				tellme('Select 2 points with mouse')
-				pts = np.asarray( plt.ginput(2,timeout=-1) )
-				if len(pts) < 2:
-					tellme('Too few points, starting over')
-					# time.sleep(1) # Wait a second
-				plt.fill( pts[:,0], pts[:,1], 'r', lw=2 )
-				tellme('Happy? Key click for yes, mouse click for no')
-				happy = pl.waitforbuttonpress()
+	# 	pl.waitforbuttonpress()
+	# 	happy = False
+	# 	while not happy:
+	# 		pts = []
+	# 		while len(pts) < 2:
+	# 			tellme('Select 2 points with mouse')
+	# 			pts = np.asarray( plt.ginput(2,timeout=-1) )
+	# 			if len(pts) < 2:
+	# 				tellme('Too few points, starting over')
+	# 				# time.sleep(1) # Wait a second
+	# 			plt.fill( pts[:,0], pts[:,1], 'r', lw=2 )
+	# 			tellme('Happy? Key click for yes, mouse click for no')
+	# 			happy = pl.waitforbuttonpress()
 
 
-		self.robotIntiPosition = pts
-		plt.close(1)
+	# 	self.robotIntiPosition = pts
+	# 	plt.close(1)
 
 	def tsp_opt(self):
-		#in this function order the sequence of clusters as a TSP
-		#Prepare the square symmetric distance matrix for n_cluster nodes:
-		#  Distance from 0 to 1 is 1.0
-		#                1 to 2 is 3.0
-		#                0 to 2 is 2.0
-		#D = [[ 0, 1.0, 2.0],
-		#     [ 1.0, 0, 3.0],
-		#     [ 2.0, 3.0, 0]]
-		np.random.seed(42)
-		self.getRobotIntialPoition()
 
+		# self.getRobotIntialPoition()
+		self.robotIntiPosition=self.data[0]
 		#nodes locations using cluster centers and robot position at nodes number (n_cluster+1)
-		nodes = np.vstack((self.cluster_centers, self.robotIntiPosition[0,:]))
+		nodes = np.vstack((self.robotIntiPosition,self.cluster_centers))
 
 		
 		n_nodes = len(nodes)
@@ -317,7 +300,6 @@ class Field:
 		
 		for i in range(n_nodes):
 			for j in range(i+1, n_nodes):
-				#print "i,j:",i,j
 				tmp = nodes[i,:]-nodes[j,:]
 				sum_squared = numpy.dot(tmp.T , tmp)
 				dist[i,j] = sqrt(sum_squared)
@@ -326,14 +308,12 @@ class Field:
 			for j in range(i, n_nodes):
 				dist[j][i] = dist[i][j]
 
+		dist[:,0]=0 # solve as open tsp
 		path,_=solve_tsp_dynamic_programming(dist)
 		# path = solve_tsp( dist )
-		
-		ind = path.index(n_nodes-1)
-		path = np.roll(path, -ind)
-		path = np.hstack((path, n_nodes-1))
-		self.path = path
-				
+		self.path=path
+		self.nodes=nodes				
+
 
 	def trajGen(self, turning_radius=1.5):
 		
@@ -354,19 +334,31 @@ class Field:
 		n_clusters = len(np.unique(labels))
 		colors = iter(cm.rainbow(np.linspace(0,1,n_clusters)))
 
-		p1 = self.robotIntiPosition[0]
-		p2 = self.robotIntiPosition[1]
-		theta0 = computeAngle(p1, p2)
+		p1 = self.robotIntiPosition
+		p2 = self.robotIntiPosition
+		theta0=-0
+		# theta0 = computeAngle(p1, p2)
 
 
-		for i in range(len(self.robotIntiPosition)):
-			self.traj.append((self.robotIntiPosition[i][0], self.robotIntiPosition[i][1], 0))
+		# for i in range(len(self.robotIntiPosition)):
+		self.traj.append((self.robotIntiPosition[0], self.robotIntiPosition[1], 0))
 
 		for i in self.path[1:]:
 			# extract track i in optimal path
-			my_members = labels == i
+			my_members = labels == i-1
 			start = tracks_lower[my_members]
 			end = tracks_upper[my_members]
+
+			track_1=(start[0]+end[0])/2
+			track_n=(start[-1]+end[-1])/2
+		
+			dist_1=np.sqrt( (self.traj[-1][0]-track_1[0])**2 + (self.traj[-1][1]-track_1[1])**2 )
+			dist_n=np.sqrt( (self.traj[-1][0]-track_n[0])**2 + (self.traj[-1][1]-track_n[1])**2 )
+			
+			if dist_n < dist_1:   # to select closer end of section first, select order based on this
+				start=start[::-1]
+				end=end[::-1]
+
 
 			for j in range(len(start)):
 				if j%2:
@@ -383,7 +375,10 @@ class Field:
 
 				p_x,p_y,p_yaw,mode,_=plan_dubins_path(s_x=q0[0], s_y=q0[1], s_yaw=q0[2], g_x=q1[0], g_y=q1[1], g_yaw=q1[2], curvature=1/turning_radius,step_size=step_size)
 
-				plt.plot(p_x , p_y , '-r')
+				if j==0:
+					plt.plot(p_x , p_y , 'y--')
+				else:
+					plt.plot(p_x , p_y , '-b')
 
 				self.traj.append((p1[0], p1[1], 1))
 				for k in range(len(p_x)):
@@ -394,14 +389,8 @@ class Field:
 
 				self.turn_dist+=np.sum(np.sqrt((p_x[1:]-p_x[:-1])**2 + (p_x[1:]-p_x[:-1])**2))
 
-		p3 = self.robotIntiPosition[1]
-		p4 = self.robotIntiPosition[0]
-		theta1 = computeAngle(p3, p4)
-
 		q0 = (self.traj[-1][0], self.traj[-1][1], theta0)
 		q1 = (p1[0], p1[1], theta1)
-
-		plt.plot(p_x, p_y, '-r')
 
 		for k in range(len(p_x)):
 			self.traj.append((p_x[k], p_y[k], 0))
@@ -412,14 +401,14 @@ class Field:
 			my_members = labels == i
 
 			plt.plot([tracks_lower[my_members][:,0], tracks_upper[my_members][:,0]],\
-					 [tracks_lower[my_members][:,1], tracks_upper[my_members][:,1]], c=c)
+					 [tracks_lower[my_members][:,1], tracks_upper[my_members][:,1]],'-b') #c=c)
 
 		for i in  range(1, int(numPoly(self.data))+1):
 			poly = getPoly(self.data, i)
 			if i == 1:
-				plt.plot(poly[:,0] , poly[:,1] , 'b-')
+				plt.plot(poly[:,0] , poly[:,1] , 'r-')
 			else:
 				plt.plot(poly[:,0] , poly[:,1] , 'r-')
 	
 		# plt.show()
-
+		print('Total distance = {}; Track length = {}'.format(self.track_len+self.turn_dist, self.track_len))
