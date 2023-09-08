@@ -25,7 +25,7 @@ class Field:
 		self.labels = [] # labels of track clusters of Kmeans
 		self.num_clusters = 0 #number of clusters
 		self.cluster_centers = [] # cluster centers of Kmeans
-		self.robotIntiPosition = [] #robot initial position
+		self.robotinitpos = [] #robot initial position
 		self.path = []  # optimal path to followed by the robot
 		self.traj = []  # robot trajectory using Dubins curves
 		self.utm_l=None
@@ -63,8 +63,8 @@ class Field:
 			else:
 				plt.plot(poly[:,0] , poly[:,1] , 'r-')
 		
-		# if self.robotIntiPosition.any():
-		# 	plt.fill( self.robotIntiPosition[:,0], self.robotIntiPosition[:,1], 'r', lw=2 )
+		# if self.robotinitpos.any():
+		# 	plt.fill( self.robotinitpos[:,0], self.robotinitpos[:,1], 'r', lw=2 )
 		
 		labels = self.labels
 		n_clusters = len(np.unique(labels))
@@ -80,7 +80,7 @@ class Field:
 					 self.tracks[i][1,0] , self.tracks[i][1,1] ,'r.')
 
 		#plot field's headland paths
-		print("len(self.hd):", len(self.hd))
+		# print("len(self.hd):", len(self.hd))
 		for i in range(0, len(self.hd)):
 			if (i+1)%(self.nhp+1):
 				plt.plot(self.hd[i][:,0] , self.hd[i][:,1] ,'g-')
@@ -89,27 +89,18 @@ class Field:
 		
 		plt.show()
 
-		hd_ll,latlon=[],[]
-
-		lat,lon=utm.to_latlon(self.hd[0][0][0],self.hd[0][0][1],self.utmzone,self.utm_l,northern=True)
-		map=folium.Map(location=[lat,lon],zoom_start=20)
+		map=folium.Map(location=self.latlon[0],zoom_start=20)
 		
 		for i in range(len(self.hd)):
-			hd_ll=[]
+			self.hd_ll=[]
 			for j in range(len(self.hd[i])):
 				# lat,lon=UTMtoLL(23,self.hd[i][j][1], self.hd[i][j][0])
-				lat,lon=utm.to_latlon(self.hd[i][j][0],self.hd[i][j][1],self.utmzone,self.utm_l,northern=True)
-				hd_ll.append([lat,lon])
+				lat,lon=utm.to_latlon(self.hd[i][j][0],self.hd[i][j][1],self.utmzone,self.utm_l)
+				self.hd_ll.append([lat,lon])
 			
-			folium.PolyLine(hd_ll,color='red').add_to(map)
+			folium.PolyLine(self.hd_ll,color='red').add_to(map)
 
-		for i in range(len(self.traj)):
-			# f.writelines((str(self.tracks[i][0])))
-			# latpos,lonpos=UTMtoLL(23,self.traj[i][1],self.traj[i][0])
-			latpos,lonpos=utm.to_latlon(self.traj[i][0],self.traj[i][1],self.utmzone,self.utm_l,northern=True) 
-			latlon.append([latpos,lonpos])
-
-		folium.Polygon(latlon,color='blue').add_to(map)
+		folium.Polygon(self.latlon,color='blue').add_to(map)
 		map.show_in_browser()
 
 	def trackGen(self):
@@ -128,7 +119,7 @@ class Field:
 		# find center point of the MBB
 		m = [(xmin+xmax)/2, (ymin+ymax)/2]
 
-		print("Driving Angle: ", self.theta)
+		# print("Driving Angle: ", self.theta)
 		Xline = [m[0], m[1], 1, np.tan(self.theta)]
 		Xpline = [m[0], m[1], 1, np.tan(self.theta+pi/2)]
 		p = pointOnLine(Xpline, [-dmax/2])
@@ -186,8 +177,6 @@ class Field:
 			for j in range(0, len(poly)-1):
 				ord += (poly[j+1,0]-poly[j,0])*(poly[j+1,1]+poly[j,1])
 
-			#print "ord is: ", np.sign(ord)
-
 			if (ord < 0) and (i == 1):
 				poly = poly[::-1,:]
 			if (ord >= 0) and (i != 1) :
@@ -195,9 +184,7 @@ class Field:
 
 			if self.opw != 0:
 				dist = [self.opw/2 + self.opw*r for r in range(0,self.nhp)]
-				#dist = [dist, self.opw*self.nhp]
 				dist.append(self.opw*self.nhp)
-				#print "dist: ", dist
 
 			#generate headland paths
 			x = poly[0:-1,0]  #poly[0:-1,0]
@@ -211,7 +198,6 @@ class Field:
 			den = s1*s2+dx1*dx2+dy1*dy2
 
 			for j in range(0, len(dist)):
-				#print j, dist[j]
 				X = x + dist[j]*(dy1*s2+dy2*s1)/den
 				Y = y - dist[j]*(dx1*s2+dx2*s1)/den
 				#close the polygon
@@ -225,7 +211,7 @@ class Field:
 	def cluster(self,num_clusters=4):
 
 		self.num_clusters=num_clusters
-		np.random.seed(42)
+		np.random.seed(0)
 		data = []
 		for i in range(0, len(self.tracks)):
 			data.append((self.tracks[i][0,0] , self.tracks[i][0,1]))
@@ -284,15 +270,15 @@ class Field:
 	# 			happy = pl.waitforbuttonpress()
 
 
-	# 	self.robotIntiPosition = pts
+	# 	self.robotinitpos = pts
 	# 	plt.close(1)
 
 	def tsp_opt(self):
 
 		# self.getRobotIntialPoition()
-		self.robotIntiPosition=self.data[0]
+		self.robotinitpos=self.data[0]
 		#nodes locations using cluster centers and robot position at nodes number (n_cluster+1)
-		nodes = np.vstack((self.robotIntiPosition,self.cluster_centers))
+		nodes = np.vstack((self.robotinitpos,self.cluster_centers))
 
 		
 		n_nodes = len(nodes)
@@ -334,14 +320,14 @@ class Field:
 		n_clusters = len(np.unique(labels))
 		colors = iter(cm.rainbow(np.linspace(0,1,n_clusters)))
 
-		p1 = self.robotIntiPosition
-		p2 = self.robotIntiPosition
+		p1 = self.robotinitpos
+		p2 = self.robotinitpos
 		theta0=-0
 		# theta0 = computeAngle(p1, p2)
 
 
-		# for i in range(len(self.robotIntiPosition)):
-		self.traj.append((self.robotIntiPosition[0], self.robotIntiPosition[1], 0))
+		# for i in range(len(self.robotinitpos)):
+		self.traj.append((self.robotinitpos[0], self.robotinitpos[1], 0))
 
 		for i in self.path[1:]:
 			# extract track i in optimal path
@@ -389,13 +375,13 @@ class Field:
 
 				self.turn_dist+=np.sum(np.sqrt((p_x[1:]-p_x[:-1])**2 + (p_x[1:]-p_x[:-1])**2))
 
-		q0 = (self.traj[-1][0], self.traj[-1][1], theta0)
-		q1 = (p1[0], p1[1], theta1)
+		# q0 = (self.traj[-1][0], self.traj[-1][1], theta0)
+		# q1 = (p1[0], p1[1], theta1)
 
-		for k in range(len(p_x)):
-			self.traj.append((p_x[k], p_y[k], 0))
-			self.traj.append((p1[0], p1[1], 0))
-			self.traj.append((p2[0], p2[1], 0))
+		# for k in range(len(p_x)):
+		# 	self.traj.append((p_x[k], p_y[k], 0))
+		# 	self.traj.append((p1[0], p1[1], 0))
+		# 	self.traj.append((p2[0], p2[1], 0))
 
 		for i, c in zip(list(range(n_clusters)), colors):
 			my_members = labels == i
@@ -412,3 +398,16 @@ class Field:
 	
 		# plt.show()
 		print('Total distance = {}; Track length = {}'.format(self.track_len+self.turn_dist, self.track_len))
+
+		self.hd_ll,self.latlon=[],[]
+		
+		for i in range(len(self.hd)):
+			self.hd_ll=[]
+			for j in range(len(self.hd[i])):
+				lat,lon=utm.to_latlon(self.hd[i][j][0],self.hd[i][j][1],self.utmzone,self.utm_l)
+				self.hd_ll.append([lat,lon])
+			
+
+		for i in range(len(self.traj)):
+			latpos,lonpos=utm.to_latlon(self.traj[i][0],self.traj[i][1],self.utmzone,self.utm_l) 
+			self.latlon.append([latpos,lonpos])
