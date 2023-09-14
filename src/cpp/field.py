@@ -4,13 +4,12 @@ import numpy as np
 import math, numpy.linalg
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
-import pylab as pl
 from sklearn.cluster import KMeans
 from python_tsp.exact import solve_tsp_dynamic_programming
 from dubins_path_planner import plan_dubins_path
 from lines import computeAngle, pointOnLine, intersectLines, intersectPointOnLine
 from lines import getPoly, numPoly, tellme
-from convert_coordinates import LLtoUTM, UTMtoLL
+# from convert_coordinates import LLtoUTM, UTMtoLL
 import folium
 import utm
 
@@ -217,7 +216,7 @@ class Field:
 			data.append((self.tracks[i][0,0] , self.tracks[i][0,1]))
 		data = np.asarray(data)
 
-		k_means = KMeans(n_clusters=self.num_clusters)
+		k_means = KMeans(n_clusters=self.num_clusters,n_init=10)
 		k_means.fit(data)
 		self.labels = k_means.labels_
 		self.cluster_centers = k_means.cluster_centers_
@@ -304,9 +303,6 @@ class Field:
 	def trajGen(self, turning_radius=1.5):
 		
 		step_size = 1
-		plt.figure()
-		plt.axis('equal')
-		plt.axis('off')
 
 		self.turn_dist=0
 		tracks_lower,tracks_upper = [], []
@@ -361,10 +357,10 @@ class Field:
 
 				p_x,p_y,p_yaw,mode,_=plan_dubins_path(s_x=q0[0], s_y=q0[1], s_yaw=q0[2], g_x=q1[0], g_y=q1[1], g_yaw=q1[2], curvature=1/turning_radius,step_size=step_size)
 
-				if j==0:
-					plt.plot(p_x , p_y , 'y--')
-				else:
-					plt.plot(p_x , p_y , '-b')
+				# if j==0:
+				# 	plt.plot(p_x , p_y , 'y--')
+				# else:
+				# 	plt.plot(p_x , p_y , '-b')
 
 				self.traj.append((p1[0], p1[1], 1))
 				for k in range(len(p_x)):
@@ -383,21 +379,21 @@ class Field:
 		# 	self.traj.append((p1[0], p1[1], 0))
 		# 	self.traj.append((p2[0], p2[1], 0))
 
-		for i, c in zip(list(range(n_clusters)), colors):
-			my_members = labels == i
+		# for i, c in zip(list(range(n_clusters)), colors):
+		# 	my_members = labels == i
 
-			plt.plot([tracks_lower[my_members][:,0], tracks_upper[my_members][:,0]],\
-					 [tracks_lower[my_members][:,1], tracks_upper[my_members][:,1]],'-b') #c=c)
+		# 	plt.plot([tracks_lower[my_members][:,0], tracks_upper[my_members][:,0]],\
+		# 			 [tracks_lower[my_members][:,1], tracks_upper[my_members][:,1]],'-b') #c=c)
 
-		for i in  range(1, int(numPoly(self.data))+1):
-			poly = getPoly(self.data, i)
-			if i == 1:
-				plt.plot(poly[:,0] , poly[:,1] , 'r-')
-			else:
-				plt.plot(poly[:,0] , poly[:,1] , 'r-')
+		# for i in  range(1, int(numPoly(self.data))+1):
+		# 	poly = getPoly(self.data, i)
+		# 	if i == 1:
+		# 		plt.plot(poly[:,0] , poly[:,1] , 'r-')
+		# 	else:
+		# 		plt.plot(poly[:,0] , poly[:,1] , 'r-')
 	
 		# plt.show()
-		print('Total distance = {}; Track length = {}'.format(self.track_len+self.turn_dist, self.track_len))
+		# print('Total distance = {}; Track length = {}'.format(self.track_len+self.turn_dist, self.track_len))
 
 		self.hd_ll,self.latlon=[],[]
 		
