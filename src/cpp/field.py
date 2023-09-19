@@ -8,7 +8,7 @@ from sklearn.cluster import KMeans
 from python_tsp.exact import solve_tsp_dynamic_programming
 from dubins_path_planner import plan_dubins_path
 from lines import computeAngle, pointOnLine, intersectLines, intersectPointOnLine
-from lines import getPoly, numPoly, tellme
+from lines import getPoly, numPoly
 # from convert_coordinates import LLtoUTM, UTMtoLL
 import folium
 import utm
@@ -318,11 +318,9 @@ class Field:
 
 		p1 = self.robotinitpos
 		p2 = self.robotinitpos
-		theta0=-0
+		theta0=0
 		# theta0 = computeAngle(p1, p2)
 
-
-		# for i in range(len(self.robotinitpos)):
 		self.traj.append((self.robotinitpos[0], self.robotinitpos[1], 0))
 
 		for i in self.path[1:]:
