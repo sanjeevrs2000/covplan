@@ -1,8 +1,7 @@
 # Complete coverage Path Planning (CCPP)
 
-[![PyPi version](https://badgen.net/pypi/v/pip/)](https://pypi.org/project/cc-pathplanner/0.1.0/)
-[![Npm package license](https://badgen.net/npm/llicense/discord.js)](https://github.com/sanjeevrs2000/cpp/blob/main/LICENSE)
-
+[![PyPi version](https://img.shields.io/pypi/v/:packageName)](https://pypi.org/project/cc-pathplanner/0.1.0/)
+[![PyPi license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.org/project/cc-pathplanner/0.1.0/)
 
 
 This repository contains a program which generates a guidance trajectory for complete 2D coverage. It can be used for operations where complete coverage of an Area of Interest (AoI) is required, for land or marine applications.
