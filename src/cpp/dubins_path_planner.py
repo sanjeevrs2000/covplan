@@ -11,7 +11,7 @@ sys.path.append(str(pathlib.Path(__file__).parent.parent.parent))
 
 from math import sin, cos, atan2, sqrt, acos, pi, hypot
 import numpy as np
-from angles import angle_mod, rot_mat_2d
+from cpp.angles import angle_mod, rot_mat_2d
 
 show_animation = True
 

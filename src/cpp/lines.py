@@ -1,13 +1,8 @@
 from numpy import *
 from math import *
 import numpy as np
-import math, numpy.linalg, copy
+import math, numpy.linalg
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
-import itertools
-from pylab import ginput
 
 
 def createLine(p1, p2):

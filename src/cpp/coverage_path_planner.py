@@ -1,4 +1,4 @@
-from field import Field
+from cpp.field import Field
 from scipy import optimize
 
 def cpp(input_file,width,num_hd=0,theta=0,num_clusters=3,radius=2,visualize=True):

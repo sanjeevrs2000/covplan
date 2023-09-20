@@ -1,4 +1,4 @@
-from coverage_path_planner import cpp, find_min
+from cpp.coverage_path_planner import cpp, find_min
 
 def main():
 	num_clusters=4	#number of blocks
