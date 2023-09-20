@@ -1,6 +1,6 @@
 # Complete coverage Path Planning (CCPP)
 
-[![PyPi version](https://img.shields.io/pypi/v/:packageName)](https://pypi.org/project/cc-pathplanner/0.1.0/)
+[![PyPi version](https://img.shields.io/pypi/v/yt2mp3.svg)](https://pypi.org/project/cc-pathplanner/0.1.0/)
 [![PyPi license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.org/project/cc-pathplanner/0.1.0/)
 
 
