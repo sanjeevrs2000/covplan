@@ -1,8 +1,8 @@
 Metadata-Version: 2.1
-Name: cc-pp
-Version: 0.0.2
+Name: cc-pathplanner
+Version: 0.1.0
 Summary: A package to generate a guidance trajectory for complete coverage of a region of interest
-Author-email: "Ibrahim A. Hameed" <ibib@ntnu.no>
+Author-email: "Ibrahim A. Hameed" <ibib@ntnu.no>, "Sanjeev Kumar R. S." <sanjeev.k.r.sudha@ntnu.no>
 Project-URL: Homepage, https://github.com/sanjeevrs2000/cpp
 Project-URL: Bug Tracker, https://github.com/sanjeevrs2000/cpp/issues
 Classifier: Programming Language :: Python :: 3
@@ -12,13 +12,13 @@ Requires-Python: >=3.7
 Description-Content-Type: text/markdown
 License-File: LICENSE
 
-# Coverage Path Planning (CPP)
+# Complete coverage Path Planning (CCPP)
 
 ## What is it useful for?
 This repository contains a program which generates a guidance trajectory for complete 2D coverage. It can be used for operations where complete coverage of an Area of Interest (AoI) is required, for land or marine applications.
 
 ## How to use the program
-To use the program, run `coverage_path_planner.cpp(input_file, params)`. It returns a list of coordinates that constitute the path for complete coverage.
+To use the program, run `coverage_path_planner.cpp(input_file, params)`. It returns a list of coordinates that compose a path for complete coverage.
 In the input file, describe the boundaries of the AoI using its lat-lon coordinates like this:  
 ```
   lat1  lon1
@@ -29,3 +29,24 @@ In the input file, describe the boundaries of the AoI using its lat-lon coordina
 ```
 Ensure that the AoI is a closed polygon, by keeping the first coordinate the same as the last coordinate. Separate different polygons by including a `NaN NaN` at the end. Also ensure that the coordinates of the polygon are described clockwise, and counter-clockwise for any obstacles and forbidden regions.
 `coverage_path_planner.find_min(input_file, params)` runs a single objective optimizer to find the driving angle that minimizes the trajectory length for a given AoI and the specified parameters.
+
+##Example usage
+```
+from cc_pathplanner import coverage_path_planner
+
+def main():
+	n_clusters=4	#number of sections
+	r=2	#radius for Dubins curves
+	input_file='sample_area.txt' #location of the input file containing coordinates of the field
+	width = 10	#distance between tracks
+	driving_angle=90	#angle wrt X-axis in degrees
+	no_hd=0	#number of margins around boundary (each with distance=0.5*width) if needed, otherwise 0
+	
+	op=coverage_path_planner.cpp(input_file,num_hd=no_hd,width=width,theta=driving_angle,num_clusters=n_clusters,radius=r,visualize=False) # returns list of waypoint coordinates composing trajectory
+	print('The trajectory for full coverage consists of the following waypoints:',op)
+	min=coverage_path_planner.find_min(input_file)  # runs optimizer and returns angle corresponding to minimum path length
+	print('Angle for trajectory with minimum length:', min)
+
+if __name__ == '__main__':
+	main()
+```

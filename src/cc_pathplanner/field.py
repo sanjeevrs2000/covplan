@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from sklearn.cluster import KMeans
 from python_tsp.exact import solve_tsp_dynamic_programming
-from cpp.dubins_path_planner import plan_dubins_path
-from cpp.lines import computeAngle, pointOnLine, intersectLines, intersectPointOnLine
-from cpp.lines import getPoly, numPoly
+from cc_pathplanner.dubins_path_planner import plan_dubins_path
+from cc_pathplanner.lines import computeAngle, pointOnLine, intersectLines, intersectPointOnLine
+from cc_pathplanner.lines import getPoly, numPoly
 # from convert_coordinates import LLtoUTM, UTMtoLL
 import folium
 import utm
