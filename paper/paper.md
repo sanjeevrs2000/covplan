@@ -1,5 +1,5 @@
 ---
-title:'A Python package for complete Coverage Path Planning'
+title:'A Python package for Complete Coverage Path Planning'
 tags:
   - Python
   - Path planning
