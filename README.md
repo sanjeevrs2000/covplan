@@ -1,7 +1,7 @@
 # Complete coverage Path Planning (CCPP)
 
-[![PyPI version fury.io](https://badge.fury.io/py/ansicolortags.svg)]([https://pypi.python.org/pypi/ansicolortags/](https://pypi.org/project/cc-pathplanner/0.1.0/)
-[![Npm package license](https://badgen.net/npm/llicense/discord.js)](https://npmjs.com/package/discord.js](https://github.com/sanjeevrs2000/cpp/blob/main/LICENSE)
+[![PyPi version](https://badgen.net/pypi/v/pip/)](https://pypi.org/project/cc-pathplanner/0.1.0/)
+[![Npm package license](https://badgen.net/npm/llicense/discord.js)](https://github.com/sanjeevrs2000/cpp/blob/main/LICENSE)
 
 
 
