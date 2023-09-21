@@ -9,18 +9,11 @@ authors:
   - name: Ibrahim A. Hameed
     affiliation: 1 
   - name: Sanjeev Kumar R. S.
- orcid: 0000-0001-7442-3696
+    orcid: 0000-0001-7442-3696
     affiliation: 1
-  <!-- - name: Author with no affiliation
-    corresponding: true # (This is how to denote the corresponding author)
-    equal-contrib: true
-    affiliation: 3 -->
 affiliations:
  - name: Department of ICT and Natural Sciences, Norwegian University of Science and Technology, Norway
    index: 1
- - name: Institution Name, Country
-   index: 2
-
 date: September 2023
 bibliography: refs.bib
 ---
