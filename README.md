@@ -19,7 +19,7 @@ In the input file, describe the boundaries of the AoI using its lat-lon coordina
 Ensure that the AoI is a closed polygon, by keeping the first coordinate the same as the last coordinate. Separate different polygons by including a `NaN NaN` at the end. Also ensure that the coordinates of the polygon are described clockwise, and counter-clockwise for any obstacles and forbidden regions.
 `coverage_path_planner.find_min(input_file, params)` runs a single objective optimizer to find the driving angle that minimizes the trajectory length for a given AoI and the specified parameters.
 
-##Example usage
+## Example usage
 ```
 from cc_pathplanner import coverage_path_planner
 
