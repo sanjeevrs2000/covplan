@@ -20,7 +20,7 @@ Ensure that the AoI is a closed polygon, by keeping the first coordinate the sam
 `coverage_path_planner.find_min(input_file, params)` runs a single objective optimizer to find the driving angle that minimizes the trajectory length for a given AoI and the specified parameters.
 
 ## Example usage
-```
+```python
 from cc_pathplanner import coverage_path_planner
 
 def main():
