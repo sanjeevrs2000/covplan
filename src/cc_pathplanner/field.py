@@ -360,10 +360,8 @@ class Field:
 				# else:
 				# 	plt.plot(p_x , p_y , '-b')
 
-				self.traj.append((p1[0], p1[1], 1))
 				for k in range(len(p_x)):
 					self.traj.append((p_x[k], p_y[k], 0))
-				self.traj.append((p4[0], p4[1], 1))
 
 				(p1,p2,theta0) = (p3,p4,theta1)
 

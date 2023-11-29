@@ -1,0 +1,15 @@
+LICENSE
+README.md
+pyproject.toml
+src/cc_pathplanner/angles.py
+src/cc_pathplanner/convert_coordinates.py
+src/cc_pathplanner/coverage_path_planner.py
+src/cc_pathplanner/dubins_path_planner.py
+src/cc_pathplanner/field.py
+src/cc_pathplanner/lines.py
+src/cc_pathplanner/main.py
+src/cc_pathplanner.egg-info/PKG-INFO
+src/cc_pathplanner.egg-info/SOURCES.txt
+src/cc_pathplanner.egg-info/dependency_links.txt
+src/cc_pathplanner.egg-info/top_level.txt
+tests/test_main.py

@@ -6,16 +6,23 @@ build-backend = "setuptools.build_meta"
 name = "cc_pathplanner"
 version = "0.1.0"
 authors = [
-  { name="Ibrahim A. Hameed", email="ibib@ntnu.no" },
-  { name="Sanjeev Kumar R. S.", email="sanjeev.k.r.sudha@ntnu.no" }
+  { name="Sanjeev Kumar R. S.", email="sanjeev.k.r.sudha@ntnu.no" },
+  { name="Ibrahim A. Hameed", email="ibib@ntnu.no" }
 ]
-description = "A package to generate a guidance trajectory for complete coverage of a region of interest"
+description = "A package to generate a guidance trajectory for complete 2D coverage of a region of interest"
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+]
+dependencies = [
+  "matplotlib~=3.6.1",
+  "scipy~=1.10.1",
+  "scikit-learn~=1.2.0",
+  "utm~=0.7.0",
+  "python-tsp~=0.3.1",
 ]
 
 [project.urls]
