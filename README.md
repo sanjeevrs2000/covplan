@@ -1,6 +1,6 @@
 # Complete coverage Path Planning (CCPP)
 
-[![PyPi version](https://img.shields.io/pypi/v/yt2mp3.svg)](https://pypi.org/project/cc-pathplanner/0.1.0/)
+[![PyPI](https://img.shields.io/pypi/v/cc_pathplanner?color=blue&label=pypi)](https://pypi.org/project/cc-pathplanner/0.1.0/)
 [![PyPi license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.org/project/cc-pathplanner/0.1.0/)
 
 
@@ -19,8 +19,8 @@ In the input file, describe the boundaries of the AoI using its lat-lon coordina
 Ensure that the AoI is a closed polygon, by keeping the first coordinate the same as the last coordinate. Separate different polygons by including a `NaN NaN` at the end. Also ensure that the coordinates of the polygon are described clockwise, and counter-clockwise for any obstacles and forbidden regions.
 `coverage_path_planner.find_min(input_file, params)` runs a single objective optimizer to find the driving angle that minimizes the trajectory length for a given AoI and the specified parameters.
 
-##Example usage
-```
+## Example usage
+```python
 from cc_pathplanner import coverage_path_planner
 
 def main():
