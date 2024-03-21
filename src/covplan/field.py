@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from sklearn.cluster import KMeans
 from python_tsp.exact import solve_tsp_dynamic_programming
-from cc_pathplanner.dubins_path_planner import plan_dubins_path
-from cc_pathplanner.lines import computeAngle, pointOnLine, intersectLines, intersectPointOnLine
-from cc_pathplanner.lines import getPoly, numPoly
-# from convert_coordinates import LLtoUTM, UTMtoLL
+from covplan.dubins_path_planner import plan_dubins_path
+from covplan.lines import computeAngle, pointOnLine, intersectLines, intersectPointOnLine
+from covplan.lines import getPoly, numPoly
+# from LLcoordinates import LLtoUTM, UTMtoLL
 import folium
 import utm
 

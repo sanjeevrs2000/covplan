@@ -1,7 +1,6 @@
 import numpy as np
 from scipy.spatial.transform import Rotation as Rot
 
-
 def rot_mat_2d(angle):
     """
     Create 2D rotation matrix from an angle

@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=0.61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ccpp-dubins"
-version = "0.3.0"
+name = "covplan"
+version = "0.2.0"
 authors = [
   { name="Sanjeev Kumar R. S.", email="sanjeev.k.r.sudha@ntnu.no" },
   { name="Ibrahim A. Hameed", email="ibib@ntnu.no" }
@@ -18,11 +18,13 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-  "matplotlib~=3.6.1",
-  "scipy~=1.10.1",
-  "scikit-learn~=1.2.0",
-  "utm~=0.7.0",
-  "python-tsp~=0.3.1",
+  "matplotlib~=3.6",
+  "scipy>=1.10",
+  "scikit-learn>=1.2.0",
+  "wheel",
+  "utm",
+  "folium",
+  "python-tsp>=0.3",
 ]
 
 [project.urls]

@@ -1,0 +1,16 @@
+LICENSE
+README.md
+pyproject.toml
+src/covplan/angles.py
+src/covplan/convert_coordinates.py
+src/covplan/coverage_path_planner.py
+src/covplan/dubins_path_planner.py
+src/covplan/field.py
+src/covplan/lines.py
+src/covplan/main.py
+src/covplan.egg-info/PKG-INFO
+src/covplan.egg-info/SOURCES.txt
+src/covplan.egg-info/dependency_links.txt
+src/covplan.egg-info/requires.txt
+src/covplan.egg-info/top_level.txt
+tests/test_main.py

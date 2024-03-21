@@ -1,0 +1,7 @@
+matplotlib~=3.6
+scipy>=1.10
+scikit-learn>=1.2.0
+wheel
+utm
+folium
+python-tsp>=0.3
