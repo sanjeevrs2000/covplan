@@ -6,7 +6,7 @@
 
 ## Getting started
 This repository contains a program which generates a guidance trajectory for complete 2D coverage. It can be used for operations where complete coverage of an Area of Interest (AoI) is required for various applications.
-The package can be installed from PyPi by running 'pip install covplan'
+The package can be installed from PyPi by running `pip install covplan`
 
 
 ## How to use the program
