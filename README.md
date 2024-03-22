@@ -1,6 +1,6 @@
-# Complete coverage Path Planning (CCPP)
+# CovPlan: A Python package for coverage path planning
 
-[![PyPI](https://img.shields.io/pypi/v/cc_pathplanner?color=blue&label=pypi)](https://pypi.org/project/cc-pathplanner/0.1.0/)
+[![PyPI](https://img.shields.io/pypi/v/cc_pathplanner?color=blue&label=pypi)](https://pypi.org/project/covplan/0.1.0/)
 [![PyPi license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.org/project/cc-pathplanner/0.1.0/)
 
 
