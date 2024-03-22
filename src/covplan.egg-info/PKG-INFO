@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: covplan
-Version: 0.2.0
+Version: 0.1.0
 Summary: A package to generate a guidance trajectory for complete 2D coverage of a region of interest
 Author-email: "Sanjeev Kumar R. S." <sanjeev.k.r.sudha@ntnu.no>, "Ibrahim A. Hameed" <ibib@ntnu.no>
 Project-URL: Homepage, https://github.com/sanjeevrs2000/cpp
