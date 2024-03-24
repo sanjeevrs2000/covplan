@@ -1,15 +1,15 @@
-# Complete coverage Path Planning (CCPP)
+# CovPlan: A Python package for coverage path planning
 
-[![PyPI](https://img.shields.io/pypi/v/cc_pathplanner?color=blue&label=pypi)](https://pypi.org/project/cc-pathplanner/0.1.0/)
+[![PyPI](https://img.shields.io/pypi/v/cc_pathplanner?color=blue&label=pypi)](https://pypi.org/project/covplan/0.1.0/)
 [![PyPi license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.org/project/cc-pathplanner/0.1.0/)
 
 
 ## Getting started
-This repository contains a program which generates a guidance trajectory for complete 2D coverage. It can be used for operations where complete coverage of an Area of Interest (AoI) is required for various applications.
+This repository contains a program which generates a guidance trajectory for complete 2D coverage. It can be used for operations where complete coverage of an Area of Interest (AoI) is required for various applications. It is an updated Python implementation of the method that was presented in [this paper](https://journals.sagepub.com/doi/full/10.5772/56248).
 The package can be installed from PyPi by running `pip install covplan`
 
 
-## How to use the program
+## How to use it
 To use the program, run `coverage_path_planner.covplan(input_file, params)`. It returns a list of coordinates that compose a path for complete coverage.
 In the input file, describe the boundaries of the AoI using its lat-lon coordinates in the following format:  
 ```
