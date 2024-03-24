@@ -1,0 +1,8 @@
+site_name: CovPlan
+theme:
+  name: readthedocs
+# site_url: https://docs.readthedocs.io/covplan
+nav:
+  - Home: index.md
+  - About: desc.md
+  - Usage: usage.md
