@@ -17,7 +17,7 @@ The region of interest, or obstacles/forbidden regions can be described by coord
 
 ***coverage_path_planner.covplan(params)***
 
-This function returns the list of waypoint coordinates that together compose the trajectory that covers the area. Further information about what each parameter indicates can be found in the [software description](desc.md).
+This function returns the list of waypoint coordinates that together compose the trajectory that covers the area. Further information about what each parameter indicates can be found in the [software description](about.md).
 
 | Parameter    | Type   | Description                                   |
 |--------------|--------|-----------------------------------------------|

@@ -4,5 +4,5 @@ theme:
 # site_url: https://docs.readthedocs.io/covplan
 nav:
   - Home: index.md
-  - About: desc.md
+  - About: about.md
   - Usage: usage.md
