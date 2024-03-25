@@ -11,7 +11,7 @@ The package can be installed from PyPi by running `pip install covplan`. The ful
 
 
 ## How to use it
-To use the program, run `coverage_path_planner.covplan(input_file, params)`. It returns a list of coordinates that compose a path for complete coverage.
+To generate a guidance trajectory for full coverage, use the API `coverage_path_planner.covplan(input_file, params)`. It returns a list of coordinates that compose a path for complete coverage.
 In the input file, describe the boundaries of the AoI using its lat-lon coordinates in the following format:  
 ```
   lat1  lon1

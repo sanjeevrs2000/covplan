@@ -1,7 +1,7 @@
 from covplan.field import Field
 from scipy import optimize
 
-def covplan(input_file,width,num_hd=0,theta=0,num_clusters=3,radius=2,visualize=True):
+def covplan(input_file,width=10,num_hd=0,theta=0,num_clusters=3,radius=2,visualize=True):
     
 	f = Field(input_file, width, num_hd, theta)
 	f.headlandGen()

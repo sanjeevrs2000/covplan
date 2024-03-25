@@ -17,12 +17,12 @@ The region of interest, or obstacles/forbidden regions can be described by coord
 
 ***coverage_path_planner.covplan(params)***
 
-This function returns the list of waypoint coordinates that together compose the full trajectory. Further information about what each parameter indicates can be found in the [software description](desc.md).
+This function returns the list of waypoint coordinates that together compose the trajectory that covers the area. Further information about what each parameter indicates can be found in the [software description](desc.md).
 
 | Parameter    | Type   | Description                                   |
 |--------------|--------|-----------------------------------------------|
 | `input_file` | text file | Text file containting list of coordinates describing the boundaries.  |
-| `width`        | float    | The distance between parallel tracks aka operating width.         |
+| `width`        | float    | The distance between parallel tracks aka operating width in meters.         |
 | `num_hd`      | int | Number of boundary margins or headland polygons          |
 | `theta`      | float | The driving or heading angle of the parallel tracks in degrees ( 0<theta <=180)  |
 | `num_clusters`      | int | Number of sections into which the AoI is divided.                |
