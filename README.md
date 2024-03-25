@@ -1,11 +1,11 @@
 # CovPlan: A Python package for coverage path planning
 
-[![PyPI](https://img.shields.io/pypi/v/cc_pathplanner?color=blue&label=pypi)](https://pypi.org/project/covplan)
+[![PyPI](https://img.shields.io/pypi/v/cc_pathplanner?color=blue&label=pypi)](https://pypi.org/project/covplan/0.1.0/)
 [![PyPi license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.org/project/covplan/0.1.0/)
 
 
 ## Getting started
-This repository contains a program which generates a guidance trajectory for complete 2D coverage. It can be used for operations where complete coverage of an Area of Interest (AoI) is required for various applications. It is an updated Python implementation of the method that was presented in [this paper](https://journals.sagepub.com/doi/full/10.5772/56248).
+This repository can be used for generating guidance trajectories for complete field coverage. It can be used for operations where complete coverage of an Area of Interest (AoI) is required for various applications. It is an updated Python implementation of the method that was presented in [this paper](https://journals.sagepub.com/doi/full/10.5772/56248).
 
 The package can be installed from PyPi by running `pip install covplan`. The full documentation can be found [here](https://covplan.readthedocs.io/).
 
@@ -44,3 +44,4 @@ def main():
 if __name__ == '__main__':
 	main()
 ```
+
