@@ -1,6 +1,8 @@
 from cc_pathplanner.coverage_path_planner import cpp, find_min
 
 def main():
+	"""sample code for using the path planner"""
+
 	num_clusters=4	#number of blocks
 	r=2	#radius for Dubins curves
 	input_file='sample_area.txt' #location of the input file containing coordinates of the field

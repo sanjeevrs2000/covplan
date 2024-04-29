@@ -1,6 +1,7 @@
 """
 Dubins path planner
 Courtesy to Atsushi Sakai(@Atsushi_twi)
+PythonRobotics https://github.com/AtsushiSakai/PythonRobotics
 """
 
 import sys

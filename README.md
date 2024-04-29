@@ -1,16 +1,18 @@
-# CovPlan: A Python package for coverage path planning
+# CovPlan
+
+A Python package for coverage path planning
 
 [![PyPI](https://img.shields.io/pypi/v/covplan?color=blue&label=pypi)](https://pypi.org/project/covplan/0.1.0/)
 [![PyPi license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.org/project/covplan/0.1.0/)
 
-
-## Getting started
 This repository can be used for generating guidance trajectories for complete field coverage. It can be used for operations where complete coverage of an Area of Interest (AoI) is required for various applications. It is an updated Python implementation of the method that was presented in [this paper](https://journals.sagepub.com/doi/full/10.5772/56248).
 
-The package can be installed from PyPi by running `pip install covplan`. The full documentation can be found [here](https://covplan.readthedocs.io/).
+## Installation
 
+The package can be installed from PyPi by running `pip install covplan`. 
 
-## How to use it
+## Getting started
+
 To generate a guidance trajectory for full coverage, use the API `coverage_path_planner.covplan(input_file, params)`. It returns a list of coordinates that compose a path for complete coverage.
 In the input file, describe the boundaries of the AoI using its lat-lon coordinates in the following format:  
 ```
@@ -23,7 +25,7 @@ In the input file, describe the boundaries of the AoI using its lat-lon coordina
 Ensure that the AoI is a closed polygon, by keeping the first coordinate the same as the last coordinate. Separate different polygons by including a `NaN NaN` at the end. Also ensure that the coordinates of the polygon are described clockwise, and counter-clockwise for any obstacles and forbidden regions.
 `coverage_path_planner.find_min(input_file, params)` runs a single objective optimizer to find the driving angle that minimizes the trajectory length for a given AoI and the specified parameters.
 
-## Example usage
+### Example usage
 ```python
 from covplan import coverage_path_planner
 
@@ -45,3 +47,6 @@ if __name__ == '__main__':
 	main()
 ```
 
+## Documentation
+
+The full documentation can be found [here](https://covplan.readthedocs.io/).

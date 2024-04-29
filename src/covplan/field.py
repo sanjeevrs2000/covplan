@@ -14,7 +14,20 @@ import folium
 import utm
 
 class Field:
+
+	"""
+	Creates an object of the Area of interest(AoI); does the required preprocessing and further operations for generating a trajectory for coverage
+	"""
+
 	def __init__(self, filename, opw, nhp, theta):
+		
+		"""
+		args:
+		filename - location of the input textfile that describes the region of interest
+		opw - the distance between the parallel tracks, otherwise known as the operating width
+		nhp - number of headlands of boundary margins to be created within the AoI
+		theta - the angle that the parallel tracks make with the longitudinal axis
+		"""
 		self.opw = opw
 		self.nhp = nhp
 		self.theta = math.fmod( theta * pi/180+ 2 * pi, 2 * pi)
@@ -46,6 +59,7 @@ class Field:
 
 
 	def showField(self):
+		"""Visualizes the desired path on a map"""
 
 		tracks_lower,tracks_upper = [], []
 		for i in range(0, len(self.tracks)):
@@ -103,6 +117,10 @@ class Field:
 		map.show_in_browser()
 
 	def trackGen(self):
+		"""
+		Generates parallel tracks for the AoI with the given theta and width, that together compose the overall tracjectory
+		"""
+
 		poly = getPoly(self.data, 1) 
 	
 		# find minimum bounding box (MBB)
@@ -168,6 +186,10 @@ class Field:
 
 
 	def headlandGen(self):
+		"""
+		Generates boundary margins, otherwise known as headlands
+		each headland has a distance of width/2 in between them
+		"""
 
 		for i in  range(1, int(numPoly(self.data))+1):
 			poly = getPoly(self.data, i)
@@ -208,7 +230,12 @@ class Field:
 				
 
 	def cluster(self,num_clusters=4):
-
+		"""
+		Divides the region of interest into sections/clusters by using K-means clustering
+		
+		args:
+		num_clusters - Number of sections into which the region is divided into
+		"""
 		self.num_clusters=num_clusters
 		np.random.seed(0)
 		data = []
@@ -273,7 +300,10 @@ class Field:
 	# 	plt.close(1)
 
 	def tsp_opt(self):
-
+		"""
+		Finds optimal order of visits to the clusters/sections using a TSP solver
+		
+		"""
 		# self.getRobotIntialPoition()
 		self.robotinitpos=self.data[0]
 		#nodes locations using cluster centers and robot position at nodes number (n_cluster+1)
@@ -301,7 +331,14 @@ class Field:
 
 
 	def trajGen(self, turning_radius=1.5):
-		
+		"""
+		Generates complete trajectory for coverage
+		Uses Dubins curves to connect waypoints for generating a smooth trajectory
+
+		arg:
+		turning_radius - radius of the Dubins curves
+		"""
+
 		step_size = 1
 
 		self.turn_dist=0

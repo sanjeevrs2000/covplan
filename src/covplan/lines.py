@@ -5,19 +5,19 @@ import math, numpy.linalg
 import matplotlib.pyplot as plt
 
 def createLine(p1, p2):
-	'''
-	CREATELINE create a line from two points (p1 and p2) and return it as p1 (a point belonging to the line), 
+	"""
+	CREATELINE creates a line from two points (p1 and p2) and returns it as p1 (a point belonging to the line), 
 	and dx, dy (direction vector of the line) where dx=p1(:,1)-p2(:,1) and dy=p1(:,2)-p2(:,2).
 
 	Line is represented in a parametric form : [x0 y0 dx dy]
 	  x = x0 + t*dx
 	  y = y0 + t*dy;
 
-	 the line is represented by first one is a point belonging to the linethey are x0, y0 (point belongng to line) and 
+	 the line is represented by x0, y0 (point belongng to line) and 
 	 dx, dy (direction vector of the line).
 
-	l = CREATELINE(p1, p2) return the line going through the two given points.
-	'''
+	l = CREATELINE(p1, p2) returns the line going through the two given points.
+	"""
 	#line = np.array( [p1[0,0], p1[0,1], p2[0,0]-p1[0,0], p2[0,1]-p1[0,1] ])
 	#p1 = np.array(p1)
 	#p2 = np.array(p2)
@@ -31,15 +31,15 @@ def createLine(p1, p2):
 	return line
 
 def pointOnLine(line, d):
-	'''
-	POINTONLINE create a point on a line at a given distance from line origin
+	"""
+	POINTONLINE creates a point on a line at a given distance from line origin(x0,y0)
 	
 	P = POINTONLINE(LINE, D) create the point located on the line LINE, and
 	located at the distance D from origin of line.
 	LINE has the form [x0 y0 dx dy].
 	LINE and D should have the same number N of rows. The result will have
 	N rows ans 2 column (x and y positions).
-	'''
+	"""
 
 	angle = lineAngle(line)
 	#point = np.zeros([len(d), 2])
@@ -50,15 +50,15 @@ def pointOnLine(line, d):
 	return point
 
 def pointOnLine(line, d):
-	'''
-	POINTONLINE create a point on a line at a given distance from line origin
+	"""
+	POINTONLINE creates a point on a line at a given distance from line origin
 	
-	P = POINTONLINE(LINE, D) create the point located on the line LINE, and
+	P = POINTONLINE(LINE, D) creates the point located on the line LINE, and
 	located at the distance D from origin of line.
 	LINE has the form [x0 y0 dx dy].
 	LINE and D should have the same number N of rows. The result will have
 	N rows ans 2 column (x and y positions).
-	'''
+	"""
 
 	angle = lineAngle(line)
 	#point = np.zeros([len(d), 2])
@@ -69,13 +69,13 @@ def pointOnLine(line, d):
 	return np.array(point, dtype=np.double)
 
 def lineAngle(line):
-	'''
-	LINEANGLE return angle between lines
+	"""
+	LINEANGLE returns slope of the line
 	a = LINEANGLE(line) return the angle between horizontal, right-axis
 	and the given line. Angle is given in radians, between 0 and 2*pi,
 	in counter-clockwise direction.
 	see createLine for more details on line representation.
-	'''
+	"""
 	# one line
 	#theta = math.fmod(math.atan2(line[3], line[2]) + 2*pi, 2*pi);
 	#print line
@@ -83,11 +83,13 @@ def lineAngle(line):
 	return theta
 
 def numPoly(data):
+	"""returns number of polygons in data"""
 	index = np.nonzero(np.isnan(data)) #find(np.isnan(data)==True)
 	n = len(index[0])/2
 	return n 
 
 def getPoly(data, n):
+	"""extracts nth polygon boundaries from data"""
 	# this function returns polygon n stored in data
 	index = np.nonzero(np.isnan(data)) #find(np.isnan(data)==True)
 	nop = len(index[0])/2
@@ -101,6 +103,7 @@ def getPoly(data, n):
 		poly = []
 
 	return poly
+
 def intersectLines(line1, line2):
 	#INTERSECTLINES return all intersection points of N lines in 2D
 	x1 =  line1[0]
