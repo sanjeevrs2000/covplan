@@ -6,7 +6,7 @@ This Python package generates a guidance trajectory for complete coverage in 2 d
 
 # Getting Started
 
-It can be installed from PyPi by running `pip install covplan`. You can find the GitHub repository [here](https://github.com/sanjeevrs2000/cpp).
+It can be installed from PyPi by running `pip install covplan`. You can find the GitHub repository [here](https://github.com/sanjeevrs2000/covplan).
 
 See [Usage](usage.md) for more information on how to use it and [About](about.md) for description about the method.
 

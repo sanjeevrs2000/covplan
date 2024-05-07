@@ -32,25 +32,6 @@ def createLine(p1, p2):
 
 def pointOnLine(line, d):
 	"""
-	POINTONLINE creates a point on a line at a given distance from line origin(x0,y0)
-	
-	P = POINTONLINE(LINE, D) create the point located on the line LINE, and
-	located at the distance D from origin of line.
-	LINE has the form [x0 y0 dx dy].
-	LINE and D should have the same number N of rows. The result will have
-	N rows ans 2 column (x and y positions).
-	"""
-
-	angle = lineAngle(line)
-	#point = np.zeros([len(d), 2])
-	point = []
-	for i in range(len(d)):
-		#point[i,:] = [line[0]+d[i]*math.cos(angle), line[1]+d[i]*math.sin(angle)];
-		point.append([line[0]+d[i]*math.cos(angle), line[1]+d[i]*math.sin(angle)])
-	return point
-
-def pointOnLine(line, d):
-	"""
 	POINTONLINE creates a point on a line at a given distance from line origin
 	
 	P = POINTONLINE(LINE, D) creates the point located on the line LINE, and
@@ -228,7 +209,7 @@ def rmCrossovers(poly, N):
 		poly = np.vstack((poly, poly[0,:]))
 	return poly
 
-def rmGabs(poly, width, N):
+def rmGaps(poly, width, N):
 	#remove any crossovers up to N=5
 	# generate xPolygon
 	if sum(poly[-1, :] == poly[0,:]) != 2:
@@ -260,7 +241,7 @@ def rmGabs(poly, width, N):
 					poly_new = np.delete(poly, list(range(i+1,i+N)), axis = 0)  #range(i+1,i+N-1)
 					poly = poly_new
 					poly = np.vstack((poly[0:i,:], p, poly[i+N:,:]))
-					poly = rmGabs(poly, width, N)
+					poly = rmGaps(poly, width, N)
 					cross = not cross
 		i += 1
 	if sum(poly[-1, :] == poly[0,:]) != 2:

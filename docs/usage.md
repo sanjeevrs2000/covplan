@@ -1,7 +1,7 @@
 
 # How to use it
 
-To use the program, run `coverage_path_planner.covplan(input_file, params)`. It returns a list of coordinates that compose a path for complete coverage.
+To use the planner, run `covplan.pathplan(input_file, params)`. It returns a list of coordinates that compose a path for complete coverage.
 In the input file, describe the boundaries of the AoI using its lat-lon coordinates in the following format:  
 ```
   lat1  lon1
@@ -11,11 +11,11 @@ In the input file, describe the boundaries of the AoI using its lat-lon coordina
   NaN  NaN
 ```
 The region of interest, or obstacles/forbidden regions can be described by coordinates on its boundaries which appropriately represents the region in consideration. Separate different polygons by including a `NaN NaN` at the end. Also ensure that the coordinates of the polygon are described clockwise, and counter-clockwise for any obstacles and forbidden regions.
-`coverage_path_planner.find_min(input_file, params)` runs a single objective optimizer to find the driving angle that minimizes the trajectory length for a given AoI and the specified parameters.
+`covplan.find_min(input_file, params)` runs a single objective optimizer to find the driving angle that minimizes the trajectory length for a given AoI and the specified parameters.
 
 # API Reference
 
-***coverage_path_planner.covplan(params)***
+***covplan.pathplan(params)***
 
 This function returns the list of waypoint coordinates that together compose the trajectory that covers the area. Further information about what each parameter indicates can be found in the [software description](about.md).
 
@@ -29,7 +29,7 @@ This function returns the list of waypoint coordinates that together compose the
 | `radius`      | string | The radius of the Dubins curves to be used.                |
 | `visualize`      | Boolean | `True` if the trajectory is to be visualized.|
 
-***coverage_path_planner.find_min(params)***
+***covplan.find_min(params)***
 
 This function returns the angle that minimizes the trajectory length for a chosen set of parameters.
 
@@ -48,7 +48,7 @@ This function returns the angle that minimizes the trajectory length for a chose
 Here is an example code snippet using this API
 
 ```python
-from covplan import coverage_path_planner
+import covplan
 
 def main():
 	n_clusters=4	#number of sections
@@ -58,10 +58,10 @@ def main():
 	driving_angle=90	#angle wrt X-axis in degrees
 	no_hd=0	#number of margins around boundary (each with distance=0.5*width) if needed, otherwise 0
 	
-	op=coverage_path_planner.covplan(input_file,num_hd=no_hd,width=width,theta=driving_angle,num_clusters=n_clusters,radius=r,visualize=False) # returns list of waypoint coordinates composing full trajectory for coverage
+	op=covplan.pathplan(input_file,num_hd=no_hd,width=width,theta=driving_angle,num_clusters=n_clusters,radius=r,visualize=False) # returns list of waypoint coordinates composing full trajectory for coverage
 	print('The trajectory for full coverage consists of the following waypoints:',op)
 	
-	min=coverage_path_planner.find_min(input_file,width=width,num_hd=no_hd,num_clusters=n_clusters,radius=r,verbose=True)  # runs optimizer and returns angle corresponding to minimum path length
+	min=covplan.find_min(input_file,width=width,num_hd=no_hd,num_clusters=n_clusters,radius=r,verbose=True)  # runs optimizer and returns angle corresponding to minimum path length
 	# print('Angle for trajectory with minimum length:', min)
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 from covplan.field import Field
 from scipy import optimize
 
-def covplan(input_file,width=10,num_hd=0,theta=0,num_clusters=3,radius=2,visualize=True):
+def pathplan(input_file,width=10,num_hd=0,theta=0,num_clusters=3,radius=2,visualize=True):
     
     """Generates the required path for coverage with given parameters
     
@@ -54,7 +54,7 @@ def find_min(input_file,width=10,num_hd=0,num_clusters=4,radius=2,verbose=False)
         return f.turn_dist+f.track_len
     
 
-    min=optimize.dual_annealing(get_dist,maxiter=100,args=(), bounds=[(0,90)])
+    min=optimize.dual_annealing(get_dist,maxiter=100,args=(), bounds=[(0,180)])
     
     if verbose:
         print('The minimum path length is: ',min.fun)

@@ -27,6 +27,7 @@ class Field:
 		opw - the distance between the parallel tracks, otherwise known as the operating width
 		nhp - number of headlands of boundary margins to be created within the AoI
 		theta - the angle that the parallel tracks make with the longitudinal axis
+
 		"""
 		self.opw = opw
 		self.nhp = nhp
