@@ -6,6 +6,10 @@ A Python package for coverage path planning
 [![PyPi license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.org/project/covplan/0.2.0/)
 
 This repository can be used for generating guidance trajectories for complete field coverage. It can be used for operations where complete coverage of an Area of Interest (AoI) is required for various robotic applications. It is an updated Python implementation of the methodology that was originally presented in [this paper](https://journals.sagepub.com/doi/full/10.5772/56248).
+
+If you found this useful, you can cite us:
+> Ramkumar Sudha, S. K., Mishra, D., & Hameed, I. A. (2024). A coverage path planning approach for environmental monitoring using an unmanned surface vehicle. Ocean Engineering, 310, 118645. https://doi.org/10.1016/j.oceaneng.2024.118645
+
 > Hameed IA, Bochtis D, Sørensen CA. An Optimized Field Coverage Planning Approach for Navigation of Agricultural Robots in Fields Involving Obstacle Areas. International Journal of Advanced Robotic Systems. 2013;10(5). doi:10.5772/56248
 
 
